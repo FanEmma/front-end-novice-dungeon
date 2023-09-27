@@ -1,18 +1,50 @@
 <script setup>
-// import { ref, reactive } from 'vue';
-// interface data {
-//   city: string,
-//   date: string,
-//   time: string,
-// }
-// const arr: data[] = [
-//   {
-//     city: 'NEW YORK',
-//     date: 'NEW',
-//     time: 'NEW'
-//   },
-
-// ];
+import { ref, onMounted } from 'vue';
+const citys = ref([
+  {
+    timeZone: 'America/New_York',
+    name: 'NEW YORK',
+    date: '27 JAN. 2019',
+    time: '00:00'
+  },
+  {
+    timeZone: 'Europe/London',
+    name: 'LONDON',
+    date: '27 JAN. 2019',
+    time: '00:00'
+  },
+  {
+    timeZone: 'Asia/Bangkok',
+    name: 'BANGKOK',
+    date: '27 JAN. 2019',
+    time: '00:00'
+  },
+  {
+    timeZone: 'Asia/Taipei',
+    name: 'TAIWAN',
+    date: '27 JAN. 2019',
+    time: '00:00'
+  },
+  {
+    timeZone: 'Australia/Sydney',
+    name: 'SYDNEY',
+    date: '27 JAN. 2019',
+    time: '00:00'
+  },
+]);
+const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+onMounted(() => {
+  let newDate = new Date();
+  console.log(newDate);
+  citys.value = citys.value.map((item) => {
+    let dateTime = newDate.toLocaleString('zh-TW', { timeZone: item.timeZone, hour12: false });
+    let date = dateTime.split(' ')[0];
+    let dates = date.split('/');
+    item.date = `${dates[2]} ${months[dates[1] - 1]}, ${dates[0]}`;
+    item.time = (dateTime.split(' ')[1]).slice(0, 5);
+    return item;
+  });
+});
 </script>
 <template>
   <div class="worldClock-content">
@@ -21,16 +53,16 @@
         <h1>WORLD CLOCK</h1>
       </div>
       <ul class="list">
-        <li v-for="(item, index) in 5"
+        <li v-for="(item, index) in citys"
             :key="index">
           <div class="city">
-            NEW YORK
+            {{ item.name }}
           </div>
           <div class="date">
-            27 JAN. 2019
+            {{ item.date }}
           </div>
           <div class="time">
-            02:46
+            {{ item.time }}
           </div>
         </li>
       </ul>
@@ -90,7 +122,7 @@
           font-size: 72px;
           text-align: center;
           font-weight: bold;
-          line-height: 100%;
+          line-height: 65px;
         }
 
         .city {
@@ -99,7 +131,7 @@
           text-align: start;
           font-weight: bold;
           line-height: 100%;
-          padding-top: 8px;
+          padding-top: 5px;
         }
 
         .date {

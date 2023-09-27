@@ -18,8 +18,8 @@
     ],
     "rules": {
         "indent": [
-            "error",
-            "tab"
+            "off",
+            "2"
         ],
         "linebreak-style": [
             "error",
@@ -33,6 +33,7 @@
             "error",
             "always"
         ],
-        "vue/multi-word-component-names": "off"
+        "vue/multi-word-component-names": "off",
+        "no-unused-vars": "off"
     }
 }
